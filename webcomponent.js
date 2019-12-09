@@ -1,7 +1,7 @@
 (function()  {
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
-  <stryle>
+  <style>
   body { background-color:#555888; font-family:sans-serif; color:#fff; text-align:center }
   code { display:inline-block; max-width:600px;  padding:80px 0 0; line-height:1.5; font-family:monospace; color:#ccc }
   
