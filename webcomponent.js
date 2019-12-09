@@ -1,20 +1,24 @@
 (function()  {
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
-  <style>
+ 
 
-.back {
-	background-image: url(https://annakrasnitski.github.io/gaugeNew/css/gauge.png);
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	transform-origin: 50% 100%;
-	transition: 1s ease-out
-}
+  <div style="width: 1200px; margin: 50px auto">
+  <div style="margin-bottom: 20px;font-family:'Segoe UI';font-size: 12px; color: #2A2A2A;">
+	  <label style="margin-right: 15px;">Enter utilization Percentage:</label><input id="upercentage" type="number" /> <button onclick="render()">Render Chart</button>
+  </div>
+  <div>
+	  <div style="float: left; ">
+		  <div style="float: left;margin-right: 100px;">
+			  <div id="id4" style="float:left; margin-right: 100px;"></div>
+			  <div id="id3" style="float:right"></div>
+		  </div>
+		  <div id="id2" style="float:right"></div>
+	  </div>
+	  <div id="id" style="float: left"></div>
+  </div>
+</div>
 
-  </style>
   <div id="needle"><div>
 `;
 

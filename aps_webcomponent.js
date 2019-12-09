@@ -9,14 +9,6 @@ tmpl.innerHTML = `
 						<td>Value</td>
 						<td><input id="aps_val" type="text" name="val" size="20" maxlength="20"></td>
 					</tr>
-					<tr>
-						<td>Look</td>
-						<td><input type="radio" name="aps_look" checked value="vu">
-							VU-Meter<br/>
-							<input type="radio"  name="aps_look" value="knob">
-							Volume Knob<br/>
-						</td>
-					</tr>
 				</table>
 			</fieldset>
 			<button type="submit">Submit</button>
@@ -34,8 +26,7 @@ class GaugeAps extends HTMLElement {
 		  _submit(e) {
 		    	e.preventDefault();
 				this.dispatchEvent(new CustomEvent('propertiesChanged', { detail: { properties: {
-					val: this.val,
-					look: this.look
+					val: this.val
 				}}}));
 				return false;
 		  }
@@ -48,16 +39,8 @@ class GaugeAps extends HTMLElement {
 			  this._shadowRoot.getElementById("aps_val").value = value;
 		  }
 
-		  get look() {
-				 return this._shadowRoot.querySelector("input[name='aps_look']:checked").value;
-		      }
-
-		 set look(value) {
-			 this._shadowRoot.querySelector("input[name='aps_look'][value='" + value + "']").checked = "checked";
-		 }
-
 		  static get observedAttributes() {
-			  return ['val', 'look'];
+			  return ['val'];
 	      }
 
 		  attributeChangedCallback(name, oldValue, newValue) {
