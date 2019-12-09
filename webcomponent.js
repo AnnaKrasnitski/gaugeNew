@@ -142,7 +142,7 @@ class Gauge extends HTMLElement {
     set val(value) {
 		this._val =  Math.max(0, Math.min(100, value));
 		var angle = this._val / 100 * this._rotate_angle;
-		this.needle.style.transform = "rotate(" + angle + "deg)";
+		//this.needle.style.transform = "rotate(" + angle + "deg)";
 	};
 
 
