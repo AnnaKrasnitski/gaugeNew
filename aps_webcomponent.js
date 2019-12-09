@@ -67,5 +67,5 @@ class GaugeAps extends HTMLElement {
 		  }
 }
 
-customElements.define('com-sap-sample-gauge-aps', GaugeAps);
+customElements.define('com-iprosis-sample-gauge-aps', GaugeAps);
 })();
