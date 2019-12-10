@@ -10,12 +10,13 @@ tmpl.innerHTML = `
 .sc-min { float:left; }
 .sc-max { float:right; }
 .sc-value { position:absolute; top:50%; left:0; width:100%;  font-size:48px; font-weight:700 }
+.sc-value:before { content: 100;}
 </style>
 <div class="sc-gauge">
   <div class="sc-background">
     <div id="scaling" class="sc-percentage"></div>
     <div class="sc-mask"></div>
-    <span id="val" class="sc-value">88</span>
+    <span id="val" class="sc-value"></span>
   </div>
   <span id="min" class="sc-min">0</span>
   <span id="max" class="sc-max">100</span>
@@ -55,7 +56,7 @@ class Gauge extends HTMLElement {
 
 	/* setter of max */
 	setMax(newMax) {
-		this._shadowRoot.getElementById(",ax").value = newMax;
+		this._shadowRoot.getElementById("max").value = newMax;
 		var angle = this._val / 100 * this._rotate_angle;
 		console.log("angle "+angle);
 		this.scale.style.transform = "rotate(" + angle + "deg)";
