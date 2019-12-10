@@ -50,14 +50,14 @@
 				return this._shadowRoot.getElementById("aps_min").value ;
 			 }
    
-			 set min(mvalue) {
+			 set min(newMax) {
 				this._shadowRoot.getElementById("max").value = newMax;
 			 }
 			 get max() {
 				return this._shadowRoot.getElementById("aps_max").value ;
 			 }
    
-			 set max(mvalue) {
+			 set max(newMin) {
 				this._shadowRoot.getElementById("min").value = newMin;
 			 }
 	

@@ -31,8 +31,18 @@
 		},
 		"height": {
 			"type": "number",
-			"default": 50
+			"default": 300
+		},
+		"min": {
+			"type": "number",
+			"default": 0
+		},
+		"max": {
+			"type": "number",
+			"default": 100
 		}
+
+
 	},
 	"methods": {
 		"setValue": {
