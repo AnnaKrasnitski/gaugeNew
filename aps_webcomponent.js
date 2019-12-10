@@ -10,10 +10,10 @@
 							<td><input id="aps_val" type="text" name="val" size="20" maxlength="20"></td>
 						</tr>
 						<tr>
-							<td>Values</td>
+							<td>maximum value</td>
 							<td><input id="aps_max" type="text" name="max" size="10" maxlength="10"></td>
+							<td>maximum value</td>
 							<td><input id="aps_min" type="text" name="min" size="10" maxlength="10"></td>
-							</td>
 						</tr>
 					</table>
 				</fieldset>
@@ -27,37 +27,42 @@
 				this._shadowRoot = this.attachShadow({mode: 'open'});
 				this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
 				this._shadowRoot.getElementById("form").addEventListener("submit", this._submit.bind(this));
+
 			  }
-	
+
 			  _submit(e) {
-					e.preventDefault();
-					this.dispatchEvent(new CustomEvent('propertiesChanged', { detail: { properties: {
-						val: this.val,
-						min: this.min,
-						max: this.max
-					}}}));
-					return false;
-			  }
+				e.preventDefault();
+				this.dispatchEvent(new CustomEvent("propertiesChanged", {
+						detail: {
+							properties: {
+								aps_val: this.aps_val,
+								aps_max: this.aps_max,
+								aps_min: this.aps_min
+							}
+						}
+				}));
+			}
+
 	
 			  get val() {
 				 return this._shadowRoot.getElementById("aps_val").value ;
 			  }
 	
-			  set val(value) {
-				  this._shadowRoot.getElementById("aps_val").value = value;
+			  set val(newValue) {
+				  this._shadowRoot.getElementById("aps_val").value = newValue;
 			  }
-			  get min() {
-				return this._shadowRoot.getElementById("aps_min").value ;
-			 }
-   
-			 set min(newMax) {
-				this._shadowRoot.getElementById("max").value = newMax;
-			 }
-			 get max() {
+			  get max() {
 				return this._shadowRoot.getElementById("aps_max").value ;
 			 }
    
-			 set max(newMin) {
+			 set max(newMax) {
+				this._shadowRoot.getElementById("max").value = newMax;
+			 }
+			 get min() {
+				return this._shadowRoot.getElementById("aps_min").value ;
+			 }
+   
+			 set min(newMin) {
 				this._shadowRoot.getElementById("min").value = newMin;
 			 }
 	
