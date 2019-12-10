@@ -31,15 +31,18 @@ class Gauge extends HTMLElement {
 		this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
 		this.style.height = "100%";
 		this._val = 0;
+		this._rotate_angle = 180; // depends on used picture
 		this.scale = this._shadowRoot.querySelector("#scaling");
 
 	}; // end of constructor
 
 	/* getter of value */
-	set setValuel(newValue) {
+	set setValue(newValue) {
 		this._shadowRoot.getElementById("val").value = newValue;
 		this._val =  Math.max(0, Math.min(100, value));
+		console.log("this._val "+this._val);
 		var angle = this._val / 100 * this._rotate_angle;
+		console.log("angle "+angle);
 		this.scale.style.transform = "rotate(" + angle + "deg)";
 	}
 	/* setter of value*/
