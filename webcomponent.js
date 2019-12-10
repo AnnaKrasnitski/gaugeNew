@@ -1,7 +1,7 @@
 (function()  {
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
-
+<style>
 
 .sc-gauge  { 
 	width:200px; 
@@ -40,7 +40,7 @@ tmpl.innerHTML = `
 	font-size:48px; 
 	font-weight:700 
 }
-
+</style>
 <div class="sc-gauge">
   <div class="sc-background">
     <div class="sc-percentage"></div>
