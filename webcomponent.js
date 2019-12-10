@@ -35,8 +35,31 @@ class Gauge extends HTMLElement {
 		this._rotate_angle = 180; // depends on used picture
 		this.scale = this._shadowRoot.querySelector("#scaling");
 		this.value = this._shadowRoot.querySelector("#val");
-
+		this._props = {};
 	}; // end of constructor
+
+	onCustomWidgetBeforeUpdate(changedProperties) {
+		this._props = { ...this._props, ...changedProperties };
+	}
+
+	onCustomWidgetAfterUpdate(changedProperties) {
+		if ("val" in changedProperties) {
+			this.getElementById("val").value = changedProperties["val"];
+			this._val =  Math.max(0, Math.min(100, newValue));
+		console.log("this._val "+this._val);
+		this.value.content = newValue;
+		console.log("this.value " + this.value);
+		var angle = this._val / 100 * this._rotate_angle;
+		console.log("angle "+angle);
+		this.scale.style.transform = "rotate(" + angle + "deg)";
+		}
+		// if ("max" in changedProperties) {
+		// 	this.style["opacity"] = changedProperties["max"];
+		// }
+		// if ("min" in changedProperties) {
+		// 	this.style["opacity"] = changedProperties["min"];
+		// }
+	}
 
 	/* setter of value */
 	setValue(newValue) {

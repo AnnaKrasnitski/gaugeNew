@@ -33,6 +33,10 @@
 			"type": "number",
 			"default": 300
 		},
+		"val": {
+			"type": "number",
+			"default": 88
+		},
 		"min": {
 			"type": "number",
 			"default": 0
