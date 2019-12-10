@@ -18,42 +18,30 @@
 		}
 	],
 	"properties": {
-		"look": {
-			"type": "string",
-			"description": "The color of the background",
-			"default": "vu"
-		},
-		"val": {
-			"type": "number",
-			"description": "Value if Gauge",
-			"default": 0
-		},
 		"width": {
 			"type": "number",
-			"default": 200
+			"default": 300
 		},
 		"height": {
 			"type": "number",
-			"default": 100
+			"default": 50
 		}
 	},
 	"methods": {
-		"getValue": {
-			"returnType": "number",
-			"description": "Get the value",
-			"parameters": [],
-			"body": "return this.val;"
-		},
 		"setValue": {
-			"description": "Set the value",
+			"description": "Sets the value",
 			"parameters": [
 				{
-					"name": "value",
-					"type": "number",
-					"description": "The new val"
+					"name": "newData",
+					"type": "integer",
+					"description": "new value"
 				}
-			],
-			"body": "this.val = value;"
+			]
+		},
+		"getValue": {
+			"returnType": "integer",
+			"description": "Returns the value",
+			"parameters": []
 		}
 	},
 	"events": {
