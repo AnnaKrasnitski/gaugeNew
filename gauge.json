@@ -32,7 +32,7 @@
 			"description": "Sets the value",
 			"parameters": [
 				{
-					"name": "newData",
+					"name": "newValue",
 					"type": "integer",
 					"description": "new value"
 				}

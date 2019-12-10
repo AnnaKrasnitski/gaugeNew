@@ -36,7 +36,7 @@ class Gauge extends HTMLElement {
 
 	}; // end of constructor
 
-	/* getter of value */
+	/* setter of value */
 	setValue(newValue) {
 		console.log(10);
 		this._shadowRoot.getElementById("val").value = newValue;
@@ -47,7 +47,7 @@ class Gauge extends HTMLElement {
 		console.log("angle "+angle);
 		this.scale.style.transform = "rotate(" + angle + "deg)";
 	}
-	/* setter of value*/
+	/* getter of value*/
 	getValue() {
 		return this._shadowRoot.getElementById("val").value;
 	}
