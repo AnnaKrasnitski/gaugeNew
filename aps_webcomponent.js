@@ -36,9 +36,9 @@
 				this.dispatchEvent(new CustomEvent("propertiesChanged", {
 						detail: {
 							properties: {
-								val: this.aps_val,
-								max: this.aps_max,
-								min: this.aps_min
+								val: this.val,
+								max: this.max,
+								min: this.min
 							}
 						}
 				}));
