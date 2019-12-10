@@ -10,7 +10,7 @@ tmpl.innerHTML = `
 .sc-min { float:left; }
 .sc-max { float:right; }
 .sc-value { position:absolute; top:50%; left:0; width:100%;  font-size:48px; font-weight:700 }
-.sc-value:before { content: "100";}
+.sc-value:before { content: "88";}
 </style>
 <div class="sc-gauge">
   <div class="sc-background">
