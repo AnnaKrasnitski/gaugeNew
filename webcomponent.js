@@ -10,7 +10,7 @@ tmpl.innerHTML = `
 .sc-min { float:left; }
 .sc-max { float:right; }
 .sc-value { position:absolute; top:50%; left:0; width:100%;  font-size:48px; font-weight:700 }
-.sc-value:before { content: 100;}
+.sc-value:before { content: "100";}
 </style>
 <div class="sc-gauge">
   <div class="sc-background">
@@ -43,7 +43,7 @@ class Gauge extends HTMLElement {
 		this._shadowRoot.getElementById("val").value = newValue;
 		this._val =  Math.max(0, Math.min(100, newValue));
 		console.log("this._val "+this._val);
-		this.value = newValue;
+		this.value.content = newValue;
 		console.log("this.value " + this.value);
 		var angle = this._val / 100 * this._rotate_angle;
 		console.log("angle "+angle);
