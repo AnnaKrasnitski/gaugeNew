@@ -13,9 +13,9 @@ tmpl.innerHTML = `
 </style>
 <div class="sc-gauge">
   <div class="sc-background">
-    <div class="sc-percentage"></div>
+    <div id="scaling" class="sc-percentage"></div>
     <div class="sc-mask"></div>
-    <span class="sc-value">88</span>
+    <span id="val" class="sc-value">88</span>
   </div>
   <span class="sc-min">0</span>
   <span class="sc-max">100</span>
@@ -30,16 +30,21 @@ class Gauge extends HTMLElement {
 		this._shadowRoot = this.attachShadow({mode: 'open'});
 		this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
 		this.style.height = "100%";
+		this._val = 0;
+		this.scale = this._shadowRoot.querySelector("#scaling");
 
 	}; // end of constructor
 
 	/* getter of value */
 	set setValuel(newValue) {
-		this._shadowRoot.getElementById("sc-value").value = newValue;
+		this._shadowRoot.getElementById("val").value = newValue;
+		this._val =  Math.max(0, Math.min(100, value));
+		var angle = this._val / 100 * this._rotate_angle;
+		this.scale.style.transform = "rotate(" + angle + "deg)";
 	}
 	/* setter of value*/
 	get getValue() {
-		return this._shadowRoot.getElementById("sc-value").value;
+		return this._shadowRoot.getElementById("val").value;
 	}
 
   }
