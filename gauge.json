@@ -15,13 +15,6 @@
 			"url": "https://annakrasnitski.github.io/gaugeNew/webcomponent.js",
 			"integrity": "",
 			"ignoreIntegrity":true
-		},
-		{
-			"kind": "styling",
-			"tag": "com-iprosis-sample-gauge-aps",
-			"url": "https://annakrasnitski.github.io/gaugeNew/aps_webcomponent.js",
-			"integrity": "",
-			"ignoreIntegrity":true
 		}
 	],
 	"properties": {

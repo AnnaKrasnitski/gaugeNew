@@ -38,7 +38,7 @@ class GaugeAps extends HTMLElement {
 		    this._shadowRoot = this.attachShadow({mode: 'open'});
 		    this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
 		    this._shadowRoot.getElementById("form").addEventListener("submit", this._submit.bind(this));
-		  }
+		  } //end of constructor
 
 		  _submit(e) {
 		    	e.preventDefault();
