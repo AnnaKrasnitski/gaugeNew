@@ -7,13 +7,14 @@
 					<table>
 						<tr>
 							<td>Value</td>
-							<td><input id="aps_val" type="text" name="val" size="20" maxlength="20"></td>
+							<td><input id="aps_val" type="text" name="va" size="20" maxlength="20"></td>
 						</tr>
 						<tr>
+						<td>min value</td>
+							<td><input id="aps_min" type="text" name="mini" size="10" maxlength="10"></td>
 							<td>max value</td>
-							<td><input id="aps_max" type="text" name="max" size="10" maxlength="10"></td>
-							<td>min value</td>
-							<td><input id="aps_min" type="text" name="min" size="10" maxlength="10"></td>
+							<td><input id="aps_max" type="text" name="maxy" size="10" maxlength="10"></td>
+							
 						</tr>
 					</table>
 				</fieldset>

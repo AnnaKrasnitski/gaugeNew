@@ -16,7 +16,7 @@ tmpl.innerHTML = `
   <div class="sc-background">
     <div id="scaling" class="sc-percentage"></div>
     <div class="sc-mask"></div>
-    <span id="val" class="sc-value"></span>
+    <span id="vals" class="sc-value"></span>
   </div>
   <span id="min" class="sc-min">0</span>
   <span id="max" class="sc-max">100</span>
@@ -34,7 +34,7 @@ class Gauge extends HTMLElement {
 		this._val = 0;
 		this._rotate_angle = 180; // depends on used picture
 		this.scale = this._shadowRoot.querySelector("#scaling");
-		this.value = this._shadowRoot.querySelector("#val");
+		this.value = this._shadowRoot.querySelector("#vals");
 		this._props = {};
 	}; // end of constructor
 
@@ -46,14 +46,14 @@ class Gauge extends HTMLElement {
 		if ("val" in changedProperties) {
 			var newValue = changedProperties["val"];
 			console.log( "property "+ newValue);
-			this._shadowRoot.getElementById("val").value = newValue;
-			this._val =  Math.max(0, Math.min(100, changedProperties["val"]));
-		console.log("this._val "+this._val);
-		this.value.content = newValue;
-		console.log("this.value " + this.value);
-		var angle = this._val / 100 * this._rotate_angle;
-		console.log("angle "+angle);
-		this.scale.style.transform = "rotate(" + angle + "deg)";
+			this._shadowRoot.getElementById("vals").value = newValue;
+			this._val =  Math.max(0, Math.min(100, newValue));
+			console.log("this._val "+this._val);
+			this.value.content = newValue;
+			console.log("this.value " + this.value);
+			var angle = this._val / 100 * this._rotate_angle;
+			console.log("angle "+angle);
+			this.scale.style.transform = "rotate(" + angle + "deg)";
 		}
 		// if ("max" in changedProperties) {
 		// 	this.style["opacity"] = changedProperties["max"];
