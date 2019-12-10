@@ -2,44 +2,14 @@
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
 <style>
-
-.sc-gauge  { 
-	width:200px; 
-	height:200px; 
-}
-.sc-background { 
-	position:relative; 
-	height:100px; 
-	margin-bottom:10px; 
-	background-color:#ccc; 
-	border-radius:150px 150px 0 0; 
-	overflow:hidden; 
-	text-align:center; 
-}
-.sc-mask { 
-	position:absolute; 
-	top:20px; right:20px; left:20px; height:80px; 
-	background-color:#fff; 
-	border-radius:150px 150px 0 0 
-}
-.sc-percentage { 
-	position:absolute; 
-	top:100px; left:-200%; width:400%; height:400%; 
-	margin-left:100px; 
-	background-color:#f96300; 
-}
-.sc-percentage { 
-	transform:rotate(158deg); transform-origin:top center; 
-}
+.sc-gauge  { width:200px; height:200px; }
+.sc-background { position:relative; height:100px; margin-bottom:10px; background-color:#ccc; border-radius:150px 150px 0 0; overflow:hidden; text-align:center; }
+.sc-mask { position:absolute; top:20px; right:20px; left:20px; height:80px; background-color:#fff; border-radius:150px 150px 0 0 }
+.sc-percentage { position:absolute; top:100px; left:-200%; width:400%; height:400%; margin-left:100px; background-color:#f96300; }
+.sc-percentage { transform:rotate(158deg); transform-origin:top center; }
 .sc-min { float:left; }
 .sc-max { float:right; }
-.sc-value {
-	position:absolute; 
-	top:50%; left:0; 
-	width:100%;  
-	font-size:48px; 
-	font-weight:700 
-}
+.sc-value { position:absolute; top:50%; left:0; width:100%;  font-size:48px; font-weight:700 }
 </style>
 <div class="sc-gauge">
   <div class="sc-background">
