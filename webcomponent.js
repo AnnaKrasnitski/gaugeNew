@@ -49,59 +49,63 @@ class Gauge extends HTMLElement {
 			this._shadowRoot.getElementById("vals").value = newValue;
 			this._val =  Math.max(0, Math.min(100, newValue));
 			console.log("this._val "+this._val);
-			this.value.content = newValue;
+			this.value.span.content = newValue;
 			console.log("this.value " + this.value);
 			var angle = this._val / 100 * this._rotate_angle;
 			console.log("angle "+angle);
 			this.scale.style.transform = "rotate(" + angle + "deg)";
 		}
-		// if ("max" in changedProperties) {
-		// 	this.style["opacity"] = changedProperties["max"];
-		// }
-		// if ("min" in changedProperties) {
-		// 	this.style["opacity"] = changedProperties["min"];
-		// }
+		if ("max" in changedProperties) {
+			this._shadowRoot.getElementById("max").value = changedProperties["max"];
+			var angle = this._val / 100 * this._rotate_angle;
+			this.scale.style.transform = "rotate(" + angle + "deg)";
+		}
+		if ("min" in changedProperties) {
+			this._shadowRoot.getElementById("min").value = changedProperties["min"];
+			var angle = this._val / 100 * this._rotate_angle;
+			this.scale.style.transform = "rotate(" + angle + "deg)";
+		}
 	}
 
-	/* setter of value */
-	setValue(newValue) {
-		this._shadowRoot.getElementById("val").value = newValue;
-		this._val =  Math.max(0, Math.min(100, newValue));
-		console.log("this._val "+this._val);
-		this.value.content = newValue;
-		console.log("this.value " + this.value);
-		var angle = this._val / 100 * this._rotate_angle;
-		console.log("angle "+angle);
-		this.scale.style.transform = "rotate(" + angle + "deg)";
-	}
-	/* getter of value*/
-	getValue() {
-		return this._shadowRoot.getElementById("val").value;
-	}
+	// /* setter of value */
+	// setValue(newValue) {
+	// 	this._shadowRoot.getElementById("val").value = newValue;
+	// 	this._val =  Math.max(0, Math.min(100, newValue));
+	// 	console.log("this._val "+this._val);
+	// 	this.value.content = newValue;
+	// 	console.log("this.value " + this.value);
+	// 	var angle = this._val / 100 * this._rotate_angle;
+	// 	console.log("angle "+angle);
+	// 	this.scale.style.transform = "rotate(" + angle + "deg)";
+	// }
+	// /* getter of value*/
+	// getValue() {
+	// 	return this._shadowRoot.getElementById("val").value;
+	// }
 
-	/* setter of max */
-	setMax(newMax) {
-		this._shadowRoot.getElementById("max").value = newMax;
-		var angle = this._val / 100 * this._rotate_angle;
-		console.log("angle "+angle);
-		this.scale.style.transform = "rotate(" + angle + "deg)";
-	}
-	/* getter of max*/
-	getMax() {
-		return this._shadowRoot.getElementById("max").value;
-	}
+	// /* setter of max */
+	// setMax(newMax) {
+	// 	this._shadowRoot.getElementById("max").value = newMax;
+	// 	var angle = this._val / 100 * this._rotate_angle;
+	// 	console.log("angle "+angle);
+	// 	this.scale.style.transform = "rotate(" + angle + "deg)";
+	// }
+	// /* getter of max*/
+	// getMax() {
+	// 	return this._shadowRoot.getElementById("max").value;
+	// }
 	
-	/*setter of min */
-	setMin(newMin) {
-		this._shadowRoot.getElementById("min").value = newMin;
-		var angle = this._val / 100 * this._rotate_angle;
-		console.log("angle "+angle);
-		this.scale.style.transform = "rotate(" + angle + "deg)";
-	}
-	/* getter of min*/
-	getMin() {
-		return this._shadowRoot.getElementById("min").value;
-	}
+	// /*setter of min */
+	// setMin(newMin) {
+	// 	this._shadowRoot.getElementById("min").value = newMin;
+	// 	var angle = this._val / 100 * this._rotate_angle;
+	// 	console.log("angle "+angle);
+	// 	this.scale.style.transform = "rotate(" + angle + "deg)";
+	// }
+	// /* getter of min*/
+	// getMin() {
+	// 	return this._shadowRoot.getElementById("min").value;
+	// }
 
   }
   customElements.define('com-iprosis-sample-gauge', Gauge);
