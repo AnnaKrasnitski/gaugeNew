@@ -63,7 +63,7 @@
 			 }
    
 			 set min(newMin) {
-				this._shadowRoot.getElementById("min").value = newMin;
+				this._shadowRoot.getElementById("aps_min").value = newMin;
 			 }
 	
 			  static get observedAttributes() {
