@@ -17,8 +17,8 @@ tmpl.innerHTML = `
     <div class="sc-mask"></div>
     <span id="val" class="sc-value">88</span>
   </div>
-  <span class="sc-min">0</span>
-  <span class="sc-max">100</span>
+  <span id="min" class="sc-min">0</span>
+  <span id="max" class="sc-max">100</span>
 </div>
 
 `;
@@ -33,16 +33,17 @@ class Gauge extends HTMLElement {
 		this._val = 0;
 		this._rotate_angle = 180; // depends on used picture
 		this.scale = this._shadowRoot.querySelector("#scaling");
+		this.value = this._shadowRoot.querySelector("#val");
 
 	}; // end of constructor
 
 	/* setter of value */
 	setValue(newValue) {
-		console.log(10);
 		this._shadowRoot.getElementById("val").value = newValue;
-		console.log(20);
 		this._val =  Math.max(0, Math.min(100, newValue));
 		console.log("this._val "+this._val);
+		this.value = newValue;
+		console.log("this.value " + this.value);
 		var angle = this._val / 100 * this._rotate_angle;
 		console.log("angle "+angle);
 		this.scale.style.transform = "rotate(" + angle + "deg)";
@@ -50,6 +51,30 @@ class Gauge extends HTMLElement {
 	/* getter of value*/
 	getValue() {
 		return this._shadowRoot.getElementById("val").value;
+	}
+
+	/* setter of max */
+	setMax(newMax) {
+		this._shadowRoot.getElementById(",ax").value = newMax;
+		var angle = this._val / 100 * this._rotate_angle;
+		console.log("angle "+angle);
+		this.scale.style.transform = "rotate(" + angle + "deg)";
+	}
+	/* getter of max*/
+	getMax() {
+		return this._shadowRoot.getElementById("max").value;
+	}
+	
+	/*setter of min */
+	setMin(newMin) {
+		this._shadowRoot.getElementById("min").value = newMin;
+		var angle = this._val / 100 * this._rotate_angle;
+		console.log("angle "+angle);
+		this.scale.style.transform = "rotate(" + angle + "deg)";
+	}
+	/* getter of min*/
+	getMin() {
+		return this._shadowRoot.getElementById("min").value;
 	}
 
   }

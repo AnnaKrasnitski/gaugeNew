@@ -42,6 +42,36 @@
 			"returnType": "integer",
 			"description": "Returns the value",
 			"parameters": []
+		},
+		"setMax": {
+			"description": "Sets max",
+			"parameters": [
+				{
+					"name": "newMax",
+					"type": "integer",
+					"description": "new max"
+				}
+			]
+		},
+		"getMax": {
+			"returnType": "integer",
+			"description": "Returns max",
+			"parameters": []
+		},
+		"setMin": {
+			"description": "Sets min",
+			"parameters": [
+				{
+					"name": "newMin",
+					"type": "integer",
+					"description": "new min"
+				}
+			]
+		},
+		"getMin": {
+			"returnType": "integer",
+			"description": "Returns min",
+			"parameters": []
 		}
 	},
 	"events": {
