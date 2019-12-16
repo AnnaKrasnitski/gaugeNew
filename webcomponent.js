@@ -59,6 +59,7 @@ class Gauge extends HTMLElement {
 			this._shadowRoot.getElementById("max").value = changedProperties["max"];
 			var angle = this._val / 100 * this._rotate_angle;
 			this.scale.style.transform = "rotate(" + angle + "deg)";
+			////////
 		}
 		if ("min" in changedProperties) {
 			this._shadowRoot.getElementById("min").value = changedProperties["min"];
