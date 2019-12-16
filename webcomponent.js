@@ -46,7 +46,7 @@ class Gauge extends HTMLElement {
 		if ("val" in changedProperties) {
 			var newValue = changedProperties["val"];
 			console.log( "property "+ newValue);
-			this._shadowRoot.getElementById("vals").value = newValue;
+			this.value = newValue;
 			this._val =  Math.max(0, Math.min(100, newValue));
 			console.log("this._val "+this._val);
 			//this.value.span.content = newValue;
