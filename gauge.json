@@ -12,14 +12,14 @@
 		{
 			"kind": "main",
 			"tag": "com-iprosis-sample-gauge",
-			"url": "https://annaiProsis.github.io/gaugeNew/webcomponent.js",
+			"url": "https://AnnaiProsis.github.io/gaugeNew/webcomponent.js",
 			"integrity": "",
 			"ignoreIntegrity":true
 		},
 		{
 			"kind": "styling",
 			"tag": "com-iprosis-sample-gauge-aps",
-			"url": "https://annaiProsis.github.io/gaugeNew/aps_webcomponent.js",
+			"url": "https://AnnaiProsis.github.io/gaugeNew/aps_webcomponent.js",
 			"integrity": "",
 			"ignoreIntegrity":true
 		}
