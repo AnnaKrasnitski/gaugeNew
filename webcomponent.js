@@ -174,7 +174,7 @@ class Gauge extends HTMLElement {
 			console.log("this._val "+this._val);
 			//this.value.span.content = newValue;
 			//console.log("this.value " + this.value);
-			_deg = this._val / 100 * this._rotate_angle;
+			this._deg = this._val / 100 * this._rotate_angle;
 			console.log("angle "+_deg);
 
 			//	this._deg = (newValue * 177.5) / 100;
