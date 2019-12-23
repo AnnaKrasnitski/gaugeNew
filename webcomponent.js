@@ -54,33 +54,24 @@ body,
 
 .meter .low
 {
-	transform: rotate(0deg); /* W3C */
 	-webkit-transform: rotate(0deg); /* Safari & Chrome */
-	-moz-transform: rotate(0deg); /* Firefox */
 	-ms-transform: rotate(0deg); /* Internet Explorer */
-	-o-transform: rotate(0deg); /* Opera */
 	z-index: 8;
 	background-color: #09B84F;
 }
 
 .meter .normal
 {
-	transform: rotate(47deg); /* W3C */
 	-webkit-transform: rotate(47deg); /* Safari & Chrome */
-	-moz-transform: rotate(47deg); /* Firefox */
 	-ms-transform: rotate(47deg); /* Internet Explorer */
-	-o-transform: rotate(47deg); /* Opera */
 	z-index: 7;
 	background-color: #FEE62A;
 }
 
 .meter .high
 {
-	transform: rotate(90deg); /* W3C */
 	-webkit-transform: rotate(90deg); /* Safari & Chrome */
-	-moz-transform: rotate(90deg); /* Firefox */
 	-ms-transform: rotate(90deg); /* Internet Explorer */
-	-o-transform: rotate(90deg); /* Opera */
 	z-index: 6;
 	background-color: #FA0E1C;
 }
@@ -100,11 +91,9 @@ body,
 	transition-property: -webkit-transform;
 	transition-duration: 1s;
 	transition-timing-function: ease-in-out;
-	transform: rotate(0deg); /* W3C */
 	-webkit-transform: rotate(0deg); /* Safari & Chrome */
-	-moz-transform: rotate(0deg); /* Firefox */
 	-ms-transform: rotate(0deg); /* Internet Explorer */
-	-o-transform: rotate(0deg); /* Opera */
+
 }
 
 .dial .arrow
@@ -118,9 +107,8 @@ body,
 	border-right: 5px solid transparent;
 	border-bottom: 32px solid #FFFFFF;
 	-webkit-transform: rotate(-88deg); /* Safari & Chrome */
-	-moz-transform: rotate(88deg); /* Firefox */
 	-ms-transform: rotate(88deg); /* Internet Explorer */
-	-o-transform: rotate(88deg); /* Opera */
+
 
 }
 
@@ -166,6 +154,7 @@ class Gauge extends HTMLElement {
 		this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
 		this.style.height = "100%";
 		this._val = 0;
+		this._deg = 0;
 		this._rotate_angle = 180; // depends on used picture
 		this.scale = this._shadowRoot.querySelector("#needle");
 		this.value = this._shadowRoot.querySelector("#vals");
@@ -185,9 +174,16 @@ class Gauge extends HTMLElement {
 			console.log("this._val "+this._val);
 			//this.value.span.content = newValue;
 			//console.log("this.value " + this.value);
-			var angle = this._val / 100 * this._rotate_angle;
-			console.log("angle "+angle);
-			this.scale.style.transform = "rotate(" + angle + "deg)";
+			//var angle = this._val / 100 * this._rotate_angle;
+			//console.log("angle "+angle);
+			this.value.innerHTML(value + "%");
+				this._deg = (newValue * 177.5) / 100;
+	
+				//gauge_value.html(value + "%");
+				this.scale.style.transform = "rotate(" + this._deg + "deg)";
+				//dial.css({'transform': 'rotate('+deg+'deg)'});
+			//}
+			//this.scale.style.transform = "rotate(" + angle + "deg)";
 		}
 		// if ("max" in changedProperties) {
 		// 	this._shadowRoot.getElementById("max").value = changedProperties["max"];
