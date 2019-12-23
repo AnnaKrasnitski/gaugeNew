@@ -1,162 +1,21 @@
 (function()  {
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
-<style>
-html, body
-{
-	padding: 0;
-	margin: 0;
-}
-
-body,
-.dial
-{
-	background-color: #000;
-	overflow: hidden;
-}
-
-.gauge
-{
-	position: absolute;
-	width: 500px;
-	height: 500px;
-	top: 30px;
-	left: 50%;
-	margin-left: -250px;
-	border-radius: 100%;
-	transform-origin: 50% 50%;
-	-webkit-transform-origin: 50% 50%;
-	-ms-transform-origin: 50% 50%;
-	-webkit-transform: rotate(0deg);
-
-}
-
-.meter
-{
-	margin: 0;
-	padding: 0;
-}
-
-.meter > li
-{
-	width: 250px;
-	height: 250px;
-	list-style-type: none;
-	position: absolute;
-	border-top-left-radius: 250px;
-	border-top-right-radius: 0px;
-	transform-origin:  100% 100%;;
-	-webkit-transform-origin:  100% 100%;;
-	-ms-transform-origin:  100% 100%;;
-	transition-property: -webkit-transform;
-	pointer-events: none;
-}
-
-.meter .low
-{
-	transform: rotate(0deg); /* W3C */
-	-webkit-transform: rotate(0deg); /* Safari & Chrome */
-	-moz-transform: rotate(0deg); /* Firefox */
-	-ms-transform: rotate(0deg); /* Internet Explorer */
-	-o-transform: rotate(0deg); /* Opera */
-	z-index: 8;
-	background-color: #09B84F;
-}
-
-.meter .normal
-{
-	transform: rotate(47deg); /* W3C */
-	-webkit-transform: rotate(47deg); /* Safari & Chrome */
-	-moz-transform: rotate(47deg); /* Firefox */
-	-ms-transform: rotate(47deg); /* Internet Explorer */
-	-o-transform: rotate(47deg); /* Opera */
-	z-index: 7;
-	background-color: #FEE62A;
-}
-
-.meter .high
-{
-	transform: rotate(90deg); /* W3C */
-	-webkit-transform: rotate(90deg); /* Safari & Chrome */
-	-moz-transform: rotate(90deg); /* Firefox */
-	-ms-transform: rotate(90deg); /* Internet Explorer */
-	-o-transform: rotate(90deg); /* Opera */
-	z-index: 6;
-	background-color: #FA0E1C;
-}
-
-
-.dial,
-.dial .inner
-{
-	width: 470px;
-	height: 470px;
-	position: relative;
-	top: 10px;
-	left: 5px;
-	border-radius: 100%;
-	border-color: purple;
-	z-index: 10;
-	transition-property: -webkit-transform;
-	transition-duration: 1s;
-	transition-timing-function: ease-in-out;
-	transform: rotate(0deg); /* W3C */
-	-webkit-transform: rotate(0deg); /* Safari & Chrome */
-	-moz-transform: rotate(0deg); /* Firefox */
-	-ms-transform: rotate(0deg); /* Internet Explorer */
-	-o-transform: rotate(0deg); /* Opera */
-}
-
-.dial .arrow
-{
-	width: 0; 
-	height: 0; 
-	position: absolute;
-	top: 214px;
-	left: 24px;
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	border-bottom: 32px solid #FFFFFF;
-	-webkit-transform: rotate(-88deg); /* Safari & Chrome */
-	-moz-transform: rotate(88deg); /* Firefox */
-	-ms-transform: rotate(88deg); /* Internet Explorer */
-	-o-transform: rotate(88deg); /* Opera */
-
-}
-
-.gauge .value
-{
-	font-family: 'Josefin Slab', serif;
-	font-size: 50px;
-	color: #ffffff;
-	position: absolute;
-	top: 142px;
-	left: 45%;
-	z-index: 11;
-}
-
-</style>
-<div class="gauge">
-			<ul class="meter">
-				<li class="low"></li>
-				<li class="normal"></li>
-				<li class="high"></li>
-			</ul>
-
-			<div class="dial">
-					<div class="inner">
-						<div class="arrow">
-						</div>
-					</div>			
-			</div>
-
-			<div class="value">
-				0%
-			</div>
-
+<div style="width: 1200px; margin: 50px auto">
+<div style="margin-bottom: 20px;font-family:'Segoe UI';font-size: 12px; color: #2A2A2A;">
+	<label style="margin-right: 15px;">Enter utilization Percentage:</label><input id="upercentage" type="number" /> <button onclick="render()">Render Chart</button>
+</div>
+<div>
+	<div style="float: left; ">
+		<div style="float: left;margin-right: 100px;">
+			<div id="id4" style="float:left; margin-right: 100px;"></div>
+			<div id="id3" style="float:right"></div>
 		</div>
-
-	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.js"></script>
+		<div id="id2" style="float:right"></div>
+	</div>
+	<div id="id" style="float: left"></div>
+</div>
+</div>
 
 `;
 
