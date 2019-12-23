@@ -168,7 +168,7 @@ class Gauge extends HTMLElement {
 	onCustomWidgetAfterUpdate(changedProperties) {
 		if ("val" in changedProperties) {
 			var newValue = changedProperties["val"];
-			console.log( "property "+ newValue);
+			console.log("property "+ newValue);
 			this.value = newValue;
 			this._val =  Math.max(0, Math.min(100, newValue));
 			console.log("this._val "+this._val);
@@ -176,7 +176,7 @@ class Gauge extends HTMLElement {
 			//console.log("this.value " + this.value);
 			//var angle = this._val / 100 * this._rotate_angle;
 			//console.log("angle "+angle);
-			this.value.innerHTML.content = (newValue + "%");
+			this.value.content = (newValue + "%");
 				this._deg = (newValue * 177.5) / 100;
 	
 				//gauge_value.html(value + "%");
