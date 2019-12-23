@@ -27,15 +27,15 @@
 	"properties": {
 		"width": {
 			"type": "number",
-			"default": 300
+			"default": 550
 		},
 		"height": {
 			"type": "number",
-			"default": 300
+			"default": 280
 		},
 		"val": {
 			"type": "number",
-			"default": 88
+			"default": 0
 		},
 		"min": {
 			"type": "number",

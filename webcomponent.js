@@ -150,7 +150,7 @@ body,
 					</div>			
 			</div>
 
-			<div class="value">
+			<div class="vals">
 				0%
 			</div>
 
@@ -167,8 +167,8 @@ class Gauge extends HTMLElement {
 		this.style.height = "100%";
 		this._val = 0;
 		this._rotate_angle = 180; // depends on used picture
-	//	this.scale = this._shadowRoot.querySelector("#scaling");
-	//	this.value = this._shadowRoot.querySelector("#vals");
+		this.scale = this._shadowRoot.querySelector("#arrow");
+		this.value = this._shadowRoot.querySelector("#vals");
 		this._props = {};
 	}; // end of constructor
 
@@ -177,19 +177,18 @@ class Gauge extends HTMLElement {
 	}
 
 	onCustomWidgetAfterUpdate(changedProperties) {
-		// if ("val" in changedProperties) {
-		// 	var newValue = changedProperties["val"];
-		// 	console.log( "property "+ newValue);
-		// 	this.value = newValue;
-		// 	this._val =  Math.max(0, Math.min(100, newValue));
-		// 	console.log("this._val "+this._val);
-		// 	//$(document).
-		// 	//this.value.span.content = newValue;
-		// 	//console.log("this.value " + this.value);
-		// 	var angle = this._val / 100 * this._rotate_angle;
-		// 	console.log("angle "+angle);
-		// 	this.scale.style.transform = "rotate(" + angle + "deg)";
-		// }
+		if ("val" in changedProperties) {
+			var newValue = changedProperties["val"];
+			console.log( "property "+ newValue);
+			this.value = newValue;
+			this._val =  Math.max(0, Math.min(100, newValue));
+			console.log("this._val "+this._val);
+			//this.value.span.content = newValue;
+			//console.log("this.value " + this.value);
+			var angle = this._val / 100 * this._rotate_angle;
+			console.log("angle "+angle);
+			this.scale.style.transform = "rotate(" + angle + "deg)";
+		}
 		// if ("max" in changedProperties) {
 		// 	this._shadowRoot.getElementById("max").value = changedProperties["max"];
 		// 	var angle = this._val / 100 * this._rotate_angle;
