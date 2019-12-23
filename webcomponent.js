@@ -145,7 +145,7 @@ body,
 
 			<div class="dial">
 					<div class="inner">
-						<div id=needle class="arrow">
+						<div id="needle" class="arrow">
 						</div>
 					</div>			
 			</div>
