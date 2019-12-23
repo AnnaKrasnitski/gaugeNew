@@ -145,12 +145,12 @@ body,
 
 			<div class="dial">
 					<div class="inner">
-						<div class="arrow">
+						<div id=needle class="arrow">
 						</div>
 					</div>			
 			</div>
 
-			<div class="vals">
+			<div id="vals" class="value">
 				0%
 			</div>
 
@@ -167,7 +167,7 @@ class Gauge extends HTMLElement {
 		this.style.height = "100%";
 		this._val = 0;
 		this._rotate_angle = 180; // depends on used picture
-		this.scale = this._shadowRoot.querySelector("#arrow");
+		this.scale = this._shadowRoot.querySelector("#needle");
 		this.value = this._shadowRoot.querySelector("#vals");
 		this._props = {};
 	}; // end of constructor
