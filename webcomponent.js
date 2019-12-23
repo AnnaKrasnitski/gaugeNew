@@ -2,25 +2,161 @@
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
 <style>
-.sc-gauge  { width:200px; height:200px; }
-.sc-background { position:relative; height:100px; margin-bottom:10px; background-color:#ccc; border-radius:150px 150px 0 0; overflow:hidden; text-align:center; }
-.sc-mask { position:absolute; top:20px; right:20px; left:20px; height:80px; background-color:#fff; border-radius:150px 150px 0 0 }
-.sc-percentage { position:absolute; top:100px; left:-200%; width:400%; height:400%; margin-left:100px; background-color:#f96300; }
-.sc-percentage { transform:rotate(158deg); transform-origin:top center; }
-.sc-min { float:left; }
-.sc-max { float:right; }
-.sc-value { position:absolute; top:50%; left:0; width:100%;  font-size:48px; font-weight:700 }
-.sc-value:before { content: "88";}
+html, body
+{
+	padding: 0;
+	margin: 0;
+}
+
+body,
+.dial
+{
+	background-color: #000;
+	overflow: hidden;
+}
+
+.gauge
+{
+	position: absolute;
+	width: 500px;
+	height: 500px;
+	top: 30px;
+	left: 50%;
+	margin-left: -250px;
+	border-radius: 100%;
+	transform-origin: 50% 50%;
+	-webkit-transform-origin: 50% 50%;
+	-ms-transform-origin: 50% 50%;
+	-webkit-transform: rotate(0deg);
+
+}
+
+.meter
+{
+	margin: 0;
+	padding: 0;
+}
+
+.meter > li
+{
+	width: 250px;
+	height: 250px;
+	list-style-type: none;
+	position: absolute;
+	border-top-left-radius: 250px;
+	border-top-right-radius: 0px;
+	transform-origin:  100% 100%;;
+	-webkit-transform-origin:  100% 100%;;
+	-ms-transform-origin:  100% 100%;;
+	transition-property: -webkit-transform;
+	pointer-events: none;
+}
+
+.meter .low
+{
+	transform: rotate(0deg); /* W3C */
+	-webkit-transform: rotate(0deg); /* Safari & Chrome */
+	-moz-transform: rotate(0deg); /* Firefox */
+	-ms-transform: rotate(0deg); /* Internet Explorer */
+	-o-transform: rotate(0deg); /* Opera */
+	z-index: 8;
+	background-color: #09B84F;
+}
+
+.meter .normal
+{
+	transform: rotate(47deg); /* W3C */
+	-webkit-transform: rotate(47deg); /* Safari & Chrome */
+	-moz-transform: rotate(47deg); /* Firefox */
+	-ms-transform: rotate(47deg); /* Internet Explorer */
+	-o-transform: rotate(47deg); /* Opera */
+	z-index: 7;
+	background-color: #FEE62A;
+}
+
+.meter .high
+{
+	transform: rotate(90deg); /* W3C */
+	-webkit-transform: rotate(90deg); /* Safari & Chrome */
+	-moz-transform: rotate(90deg); /* Firefox */
+	-ms-transform: rotate(90deg); /* Internet Explorer */
+	-o-transform: rotate(90deg); /* Opera */
+	z-index: 6;
+	background-color: #FA0E1C;
+}
+
+
+.dial,
+.dial .inner
+{
+	width: 470px;
+	height: 470px;
+	position: relative;
+	top: 10px;
+	left: 5px;
+	border-radius: 100%;
+	border-color: purple;
+	z-index: 10;
+	transition-property: -webkit-transform;
+	transition-duration: 1s;
+	transition-timing-function: ease-in-out;
+	transform: rotate(0deg); /* W3C */
+	-webkit-transform: rotate(0deg); /* Safari & Chrome */
+	-moz-transform: rotate(0deg); /* Firefox */
+	-ms-transform: rotate(0deg); /* Internet Explorer */
+	-o-transform: rotate(0deg); /* Opera */
+}
+
+.dial .arrow
+{
+	width: 0; 
+	height: 0; 
+	position: absolute;
+	top: 214px;
+	left: 24px;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 32px solid #FFFFFF;
+	-webkit-transform: rotate(-88deg); /* Safari & Chrome */
+	-moz-transform: rotate(88deg); /* Firefox */
+	-ms-transform: rotate(88deg); /* Internet Explorer */
+	-o-transform: rotate(88deg); /* Opera */
+
+}
+
+.gauge .value
+{
+	font-family: 'Josefin Slab', serif;
+	font-size: 50px;
+	color: #ffffff;
+	position: absolute;
+	top: 142px;
+	left: 45%;
+	z-index: 11;
+}
+
 </style>
-<div class="sc-gauge">
-  <div class="sc-background">
-    <div id="scaling" class="sc-percentage"></div>
-    <div class="sc-mask"></div>
-    <span id="vals" class="sc-value"></span>
-  </div>
-  <span id="min" class="sc-min">0</span>
-  <span id="max" class="sc-max">100</span>
-</div>
+<div class="gauge">
+			<ul class="meter">
+				<li class="low"></li>
+				<li class="normal"></li>
+				<li class="high"></li>
+			</ul>
+
+			<div class="dial">
+					<div class="inner">
+						<div class="arrow">
+						</div>
+					</div>			
+			</div>
+
+			<div class="value">
+				0%
+			</div>
+
+		</div>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.js"></script>
 
 `;
 
@@ -33,8 +169,8 @@ class Gauge extends HTMLElement {
 		this.style.height = "100%";
 		this._val = 0;
 		this._rotate_angle = 180; // depends on used picture
-		this.scale = this._shadowRoot.querySelector("#scaling");
-		this.value = this._shadowRoot.querySelector("#vals");
+	//	this.scale = this._shadowRoot.querySelector("#scaling");
+	//	this.value = this._shadowRoot.querySelector("#vals");
 		this._props = {};
 	}; // end of constructor
 
@@ -43,29 +179,30 @@ class Gauge extends HTMLElement {
 	}
 
 	onCustomWidgetAfterUpdate(changedProperties) {
-		if ("val" in changedProperties) {
-			var newValue = changedProperties["val"];
-			console.log( "property "+ newValue);
-			this.value = newValue;
-			this._val =  Math.max(0, Math.min(100, newValue));
-			console.log("this._val "+this._val);
-			//this.value.span.content = newValue;
-			//console.log("this.value " + this.value);
-			var angle = this._val / 100 * this._rotate_angle;
-			console.log("angle "+angle);
-			this.scale.style.transform = "rotate(" + angle + "deg)";
-		}
-		if ("max" in changedProperties) {
-			this._shadowRoot.getElementById("max").value = changedProperties["max"];
-			var angle = this._val / 100 * this._rotate_angle;
-			this.scale.style.transform = "rotate(" + angle + "deg)";
+		// if ("val" in changedProperties) {
+		// 	var newValue = changedProperties["val"];
+		// 	console.log( "property "+ newValue);
+		// 	this.value = newValue;
+		// 	this._val =  Math.max(0, Math.min(100, newValue));
+		// 	console.log("this._val "+this._val);
+		// 	//$(document).
+		// 	//this.value.span.content = newValue;
+		// 	//console.log("this.value " + this.value);
+		// 	var angle = this._val / 100 * this._rotate_angle;
+		// 	console.log("angle "+angle);
+		// 	this.scale.style.transform = "rotate(" + angle + "deg)";
+		// }
+		// if ("max" in changedProperties) {
+		// 	this._shadowRoot.getElementById("max").value = changedProperties["max"];
+		// 	var angle = this._val / 100 * this._rotate_angle;
+		// 	this.scale.style.transform = "rotate(" + angle + "deg)";
 			////////
-		}
-		if ("min" in changedProperties) {
-			this._shadowRoot.getElementById("min").value = changedProperties["min"];
-			var angle = this._val / 100 * this._rotate_angle;
-			this.scale.style.transform = "rotate(" + angle + "deg)";
-		}
+		//}
+		// if ("min" in changedProperties) {
+		// 	this._shadowRoot.getElementById("min").value = changedProperties["min"];
+		// 	var angle = this._val / 100 * this._rotate_angle;
+		// 	this.scale.style.transform = "rotate(" + angle + "deg)";
+		// }
 	}
 
 	// /* setter of value */
