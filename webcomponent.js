@@ -53,7 +53,7 @@ class Gauge extends HTMLElement {
 				return;
 			} else {
 				
-				myChart = echarts.init(document.getElementById(this.$().attr('id'))); 
+				myChart = echarts.init( _shadowRoot.querySelector('#main'));//document.getElementById(this.$().attr('id'))); 
 				this._alive = true;
 			}
 		};
