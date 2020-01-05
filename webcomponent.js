@@ -1,148 +1,6 @@
 (function()  {
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
-<style>
-html, body
-{
-	padding: 0;
-	margin: 0;
-}
-
-body,
-.dial
-{
-	background-color: #000;
-	overflow: hidden;
-}
-
-.gauge
-{
-	position: absolute;
-	width: 500px;
-	height: 500px;
-	top: 30px;
-	left: 50%;
-	margin-left: -250px;
-	border-radius: 100%;
-	transform-origin: 50% 50%;
-	-webkit-transform-origin: 50% 50%;
-	-ms-transform-origin: 50% 50%;
-	-webkit-transform: rotate(0deg);
-
-}
-
-.meter
-{
-	margin: 0;
-	padding: 0;
-}
-
-.meter > li
-{
-	width: 250px;
-	height: 250px;
-	list-style-type: none;
-	position: absolute;
-	border-top-left-radius: 250px;
-	border-top-right-radius: 0px;
-	transform-origin:  100% 100%;;
-	-webkit-transform-origin:  100% 100%;;
-	-ms-transform-origin:  100% 100%;;
-	transition-property: -webkit-transform;
-	pointer-events: none;
-}
-
-.meter .low
-{
-	-webkit-transform: rotate(0deg); /* Safari & Chrome */
-	-ms-transform: rotate(0deg); /* Internet Explorer */
-	z-index: 8;
-	background-color: #09B84F;
-}
-
-.meter .normal
-{
-	-webkit-transform: rotate(47deg); /* Safari & Chrome */
-	-ms-transform: rotate(47deg); /* Internet Explorer */
-	z-index: 7;
-	background-color: #FEE62A;
-}
-
-.meter .high
-{
-	-webkit-transform: rotate(90deg); /* Safari & Chrome */
-	-ms-transform: rotate(90deg); /* Internet Explorer */
-	z-index: 6;
-	background-color: #FA0E1C;
-}
-
-
-.dial,
-.dial .inner
-{
-	width: 470px;
-	height: 470px;
-	position: relative;
-	top: 10px;
-	left: 5px;
-	border-radius: 100%;
-	border-color: purple;
-	z-index: 10;
-	transition-property: -webkit-transform;
-	transition-duration: 1s;
-	transition-timing-function: ease-in-out;
-	-webkit-transform: rotate(0deg); /* Safari & Chrome */
-	-ms-transform: rotate(0deg); /* Internet Explorer */
-
-}
-
-.dial .arrow
-{
-	width: 0; 
-	height: 0; 
-	position: absolute;
-	top: 214px;
-	left: 24px;
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	border-bottom: 32px solid #FFFFFF;
-	-webkit-transform: rotate(-88deg); /* Safari & Chrome */
-	-ms-transform: rotate(88deg); /* Internet Explorer */
-
-
-}
-
-.gauge .value
-{
-	font-family: 'Josefin Slab', serif;
-	font-size: 50px;
-	color: #ffffff;
-	position: absolute;
-	top: 142px;
-	left: 45%;
-	z-index: 11;
-}
-
-</style>
-<div class="gauge">
-			<ul class="meter">
-				<li class="low"></li>
-				<li class="normal"></li>
-				<li class="high"></li>
-			</ul>
-
-			<div class="dial">
-					<div class="inner">
-						<div id="needle" class="arrow">
-						</div>
-					</div>			
-			</div>
-
-			<div id="vals" class="value">
-				0%
-			</div>
-
-		</div>
 
 `;
 
@@ -152,13 +10,489 @@ class Gauge extends HTMLElement {
 		super();
 		this._shadowRoot = this.attachShadow({mode: 'open'});
 		this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
-		this.style.height = "100%";
-		this._val = 0;
-		this._deg = 0;
-		this._rotate_angle = 180; // depends on used picture
-		this.scale = this._shadowRoot.querySelector("#needle");
-		this.value = this._shadowRoot.querySelector("#vals");
+		var dataResultSet = null;
+		var min = null; 		
+		var max = null; 		
+		var minNum = null; 		
+		var maxNum = null; 
+		var precision = null; 	
+		var splitnumber = null;
+		var color1 = null; 	
+		var color2 = null; 	
+		var color3 = null; 	
+		var value1 = null; 	
+		var value2 = null; 	
+		var value3 = null; 	
+		var thick = null; 		
+		var tickValue = null; 		
+		var valuedesc = null; 	
+		var reload = false;
+		var myChart = null;
+		var that = this;
+		var tickValueNum = null;
+		var startAngle = null;
+		var endAngle = null;
+		var sign = null;
+		var tickValueFontSize = null;
+		var tickValueFontFamily = null;
+		var splitLineVisible = null;
+		var splitLineColor = null;
+		var splitLineWidth = null;
+		var pointerLength = null;
+		var pointerWidth = null;
+		var pointerColor = null;
+		var tooltipVisible = null;
+		var colorNum = null;
+		var colorArray = [];
 		this._props = {};
+
+		this.init = function() {
+		
+			if (this._alive){
+				return;
+			} else {
+				
+				myChart = echarts.init(document.getElementById(this.$().attr('id'))); 
+				this._alive = true;
+			}
+		};
+		
+		this.afterUpdate = function() {
+			if (tickValue){
+				if (reload){
+					return;
+				} else {
+					if (tickValue=== Object)
+					tickValueNum = tickValue.data[0];
+					else 
+					tickValueNum = tickValue;
+					minNum = min;
+					maxNum = max;
+				/*	for(i=colorNum;i<=colornum;i++)
+					{
+					var a ="["+color+i+","+value+i+"]";
+					colorArray.push(a);
+					}
+				*/
+					this.insertData();
+					reload = true;
+				}
+			}
+				
+		};
+		
+		this.insertData = function() {
+			
+			var option = {
+					tooltip : {
+						  show : tooltipVisible,
+						/*formatter:"{a} <br/> {c}"*/
+						formatter:"{b} <br/>"+'{c}'+sign
+					},
+					toolbox: {
+						show : false,
+						feature : {
+							mark : {show: true},
+							restore : {show: true},
+							saveAsImage : {show: true}
+						}
+					},
+					series : [
+						{
+							name: valuedesc,
+							type:'gauge',
+							center : ['50%', '50%'],
+							radius : [0, '75%'],
+							startAngle: startAngle,
+							endAngle : endAngle,
+							min: minNum,
+							max: maxNum,
+							precision: precision,
+							splitNumber: splitNumber,
+							axisLine: {
+								show: true,
+								lineStyle: {
+										//	color: [[value1, color1],[value2, color2],[1, color3]], 
+								color: colorArray,
+									width: thick
+								}
+							},
+							axisTick: {
+								show: true,
+								splitNumber: 5,
+								length :10,
+								lineStyle: {
+									color: '#eee',
+									width: 1,
+									type: 'solid'
+								}
+							},
+							splitLine: {
+								show: splitLineVisible,
+								length :30,
+								lineStyle: {
+									color: splitLineColor,
+									width: splitLineWidth,
+									type: 'solid'
+								}
+							},
+						/*	axisLabel: {
+								show: true,
+								formatter: function(v){
+									switch (v+''){
+									case '10': return '弱';
+									case '30': return '低';
+									case '60': return '中';
+									case '90': return '高';
+									}
+								},
+								textStyle: {
+									 color: 'red'
+								}
+							},*/
+							pointer : {
+								length : pointerLength,
+								width : pointerWidth,
+								color : pointerColor
+							},
+							title : {
+								show : true,
+								offsetCenter: ['-65%', '-50%'],
+								textStyle: {
+									color: '#333',
+									fontSize : 40
+								}
+							},
+							detail : {
+								show : true,
+								backgroundColor: 'rgba(0,0,0,0)',
+								borderWidth: 0,
+								borderColor: '#ccc',
+								width: 100,
+								height: 40,
+								//offsetCenter: ['-60%', '-30%'],
+								formatter:'{value}'+sign,
+								textStyle: {
+									color: '#000',
+									fontSize : tickValueFontSize,
+									fontFamily: tickValueFontFamily
+								}
+							},
+	//						detail : {formatter:'{value}%'},
+							data:[{value: tickValueNum, name: valueDesc}]
+						}
+					]
+				};
+			
+			myChart.setOption(option, true);
+		};
+		
+		this.Min = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return min;
+			} else {
+				Reload = false;
+				min = value;
+				return this;
+			};
+		};
+		
+		this.Max = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return max;
+			} else {
+				Reload = false;
+				max = value;
+				return this;
+			};
+		};
+		
+		this.Precision = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return precision;
+			} else {
+				Reload = false;
+				precision = value;
+				return this;
+			};
+		};
+		
+		this.SplitNumber = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return splitNumber;
+			} else {
+				Reload = false;
+				splitNumber = value;
+				return this;
+			};
+		};
+		
+		this.Color1 = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return color1;
+			} else {
+				Reload = false;
+				color1 = value;
+				return this;
+			};
+		};
+		
+		this.Color2 = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return color2;
+			} else {
+				Reload = false;
+				color2 = value;
+				return this;
+			};
+		};
+		
+		this.Color3 = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return color3;
+			} else {
+				Reload = false;
+				color3 = value;
+				return this;
+			};
+		};
+		
+		this.Value1 = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return value1;
+			} else {
+				Reload = false;
+				value1 = value;
+				return this;
+			};
+		};
+		
+		this.Value2 = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return value2;
+			} else {
+				Reload = false;
+				value2 = value;
+				return this;
+			};
+		};
+		
+		this.Value3 = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return value3;
+			} else {
+				Reload = false;
+				value3 = value;
+				return this;
+			};
+		};
+		
+		this.Thick = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return thick;
+			} else {
+				Reload = false;
+				thick = value;
+				return this;
+			};
+		};
+		
+		this.TickValue = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return tickValue;
+			} else {
+				Reload = false;
+				tickValue = value;
+				return this;
+			};
+		};
+		
+	
+	
+	
+		this.ValueDesc = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return valueDesc;
+			} else {
+				Reload = false;
+				valueDesc = value;
+				return this;
+			};
+		};
+	
+	
+	
+	
+	this.StartAngle = function(value) {
+		if(value===undefined) {
+			Reload = false;
+			return startAngle;
+		} else {
+			Reload = false;
+			startAngle = value;
+			return this;
+		};
+	};
+	
+	this.EndAngle = function(value) {
+		if(value===undefined) {
+			Reload = false;
+			return endAngle;
+		} else {
+			Reload = false;
+			endAngle = value;
+			return this;
+			};
+		};
+		
+		this.Sign = function(value) {
+			if(value===undefined) {
+				Reload = false;
+				return sign;
+			} else {
+				Reload = false;
+				sign = value;
+				return this;
+				};
+			};
+			
+			this.TickValueFontSize = function(value) {
+				if(value===undefined) {
+					Reload = false;
+					return tickValueFontSize;
+				} else {
+					Reload = false;
+					tickValueFontSize = value;
+					return this;
+					};
+				};
+				
+				this.TickValueFontFamily = function(value) {
+					if(value===undefined) {
+						Reload = false;
+						return tickValueFontFamily;
+					} else {
+						Reload = false;
+						tickValueFontFamily = value;
+						return this;
+						};
+					};
+					
+					
+					
+					this.SplitLineVisible = function(value) {
+						if(value===undefined) {
+							Reload = false;
+							return splitLineVisible;
+						} else {
+							Reload = false;
+							splitLineVisible = value;
+							return this;
+							};
+						};
+						
+						this.SplitLineColor = function(value) {
+							if(value===undefined) {
+								Reload = false;
+								return splitLineColor;
+							} else {
+								Reload = false;
+								splitLineColor = value;
+								return this;
+								};
+							};
+							
+							this.SplitLineWidth = function(value) {
+								if(value===undefined) {
+									Reload = false;
+									return splitLineWidth;
+								} else {
+									Reload = false;
+									splitLineWidth = value;
+									return this;
+									};
+								};
+								
+								this.PointerLength = function(value) {
+									if(value===undefined) {
+										Reload = false;
+										return pointerLength;
+									} else {
+										Reload = false;
+										pointerLength = value;
+										return this;
+										};
+									};
+									
+									this.PointerWidth = function(value) {
+										if(value===undefined) {
+											Reload = false;
+											return pointerWidth;
+										} else {
+											Reload = false;
+											pointerWidth = value;
+											return this;
+											};
+										};
+					
+										this.PointerColor = function(value) {
+											if(value===undefined) {
+												Reload = false;
+												return pointerColor;
+											} else {
+												Reload = false;
+												pointerColor = value;
+												return this;
+												};
+											};
+											
+											this.TooltipVisible = function(value) {
+												if(value===undefined) {
+													Reload = false;
+													return tooltipVisible;
+												} else {
+													Reload = false;
+													tooltipVisible = value;
+													return this;
+													};
+												};
+												
+												this.ColorNum = function(value) {
+													if(value===undefined) {
+														Reload = false;
+														return colorNum;
+													} else {
+														Reload = false;
+														colorNum = value;
+														return this;
+														};
+													};
+	
+													
+													this.Rangevalues = function(value) {
+														if(value===undefined) {
+															Reload = false;
+															return colorArray;
+														} else {
+															Reload = true;
+															colorArray = eval(value);
+	
+															return this;
+															};
+														};
 	}; // end of constructor
 
 	onCustomWidgetBeforeUpdate(changedProperties) {
@@ -172,72 +506,17 @@ class Gauge extends HTMLElement {
 			this.value = newValue;
 			this._val =  Math.max(0, Math.min(100, newValue));
 			console.log("this._val "+this._val);
-			//this.value.span.content = newValue;
 			//console.log("this.value " + this.value);
 			this._deg = this._val / 100 * this._rotate_angle;
 			console.log("angle "+this._deg);
-
-			//	this._deg = (newValue * 177.5) / 100;
-	
-				//gauge_value.html(value + "%");
-				this.scale.style.transform = "rotate(" + this._deg + "deg)";
-				//dial.css({'transform': 'rotate('+deg+'deg)'});
-			//}
-			//this.scale.style.transform = "rotate(" + angle + "deg)";
+			this.scale.style.transform = "rotate(" + this._deg + "deg)";		
 		}
-		// if ("max" in changedProperties) {
-		// 	this._shadowRoot.getElementById("max").value = changedProperties["max"];
-		// 	var angle = this._val / 100 * this._rotate_angle;
-		// 	this.scale.style.transform = "rotate(" + angle + "deg)";
-			////////
-		//}
-		// if ("min" in changedProperties) {
-		// 	this._shadowRoot.getElementById("min").value = changedProperties["min"];
-		// 	var angle = this._val / 100 * this._rotate_angle;
-		// 	this.scale.style.transform = "rotate(" + angle + "deg)";
-		// }
-	}
 
-	// /* setter of value */
-	// setValue(newValue) {
-	// 	this._shadowRoot.getElementById("val").value = newValue;
-	// 	this._val =  Math.max(0, Math.min(100, newValue));
-	// 	console.log("this._val "+this._val);
-	// 	this.value.content = newValue;
-	// 	console.log("this.value " + this.value);
-	// 	var angle = this._val / 100 * this._rotate_angle;
-	// 	console.log("angle "+angle);
-	// 	this.scale.style.transform = "rotate(" + angle + "deg)";
-	// }
-	// /* getter of value*/
-	// getValue() {
-	// 	return this._shadowRoot.getElementById("val").value;
-	// }
 
-	// /* setter of max */
-	// setMax(newMax) {
-	// 	this._shadowRoot.getElementById("max").value = newMax;
-	// 	var angle = this._val / 100 * this._rotate_angle;
-	// 	console.log("angle "+angle);
-	// 	this.scale.style.transform = "rotate(" + angle + "deg)";
-	// }
-	// /* getter of max*/
-	// getMax() {
-	// 	return this._shadowRoot.getElementById("max").value;
-	// }
+  } // end of widget after update
+
+  
 	
-	// /*setter of min */
-	// setMin(newMin) {
-	// 	this._shadowRoot.getElementById("min").value = newMin;
-	// 	var angle = this._val / 100 * this._rotate_angle;
-	// 	console.log("angle "+angle);
-	// 	this.scale.style.transform = "rotate(" + angle + "deg)";
-	// }
-	// /* getter of min*/
-	// getMin() {
-	// 	return this._shadowRoot.getElementById("min").value;
-	// }
-
-  }
+} //end of class
   customElements.define('com-iprosis-sample-gauge', Gauge);
 })();
