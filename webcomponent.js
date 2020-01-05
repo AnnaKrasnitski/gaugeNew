@@ -1,7 +1,7 @@
 (function()  {
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
-    <script src="echarts.min.js"></script>
+    <script src="echarts.all.js"></script>
 	<div id="main" style="width:600px; height:400px;"></div>
 `;
 
@@ -9,7 +9,7 @@ class Gauge extends HTMLElement {
 
 	constructor() {
 		super();
-		var echarts = require('echarts');
+		//var echarts = require('echarts');
 		this._shadowRoot = this.attachShadow({mode: 'open'});
 		this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
 		var dataResultSet = null;
@@ -57,7 +57,7 @@ class Gauge extends HTMLElement {
 				myChart = echarts.init( _shadowRoot.querySelector('#main'));//document.getElementById(this.$().attr('id'))); 
 				this._alive = true;
 			//}
-		};
+		}
 		
 		init();
 
