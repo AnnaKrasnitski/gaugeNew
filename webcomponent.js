@@ -1,7 +1,8 @@
 (function()  {
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
-
+    <script src="echarts.min.js"></script>
+	<div id="main" style="width:600px; height:400px;"></div>
 `;
 
 class Gauge extends HTMLElement {
