@@ -49,13 +49,13 @@ class Gauge extends HTMLElement {
 
 		function init(){
 		
-			if (this._alive){
-				return;
-			} else {
+			// if (this._alive){
+			// 	return;
+			// } else {
 				
 				myChart = echarts.init( _shadowRoot.querySelector('#main'));//document.getElementById(this.$().attr('id'))); 
 				this._alive = true;
-			}
+			//}
 		};
 		
 		init();
