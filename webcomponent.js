@@ -1,7 +1,7 @@
 (function()  {
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
-    <script src="echarts.all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.6.0/echarts-en.common.js"></script>
 	<div id="main" style="width:600px; height:400px;"></div>
 `;
 
