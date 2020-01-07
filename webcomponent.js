@@ -1,5 +1,5 @@
 console.log(1);
-import ' https://sapui5.hana.ondemand.com/resources/sap-ui-core.js ';
+
 (function()  {
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `

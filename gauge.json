@@ -8,26 +8,20 @@
 	"newInstancePrefix": "Gauge",
 	"version": "1.0.0",
 	"icon": "https://i.pinimg.com/originals/7a/e3/2d/7ae32de747e618379dd926d09b334323.png",
+	"imports": ["https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"],
 	"webcomponents": [
 		{
 			"kind": "main",
 			"tag": "com-iprosis-sample-gauge",
 			"url": "https://AnnaiProsis.github.io/gaugeNew/webcomponent.js",
 			"integrity": "",
-			"ignoreIntegrity":true,
-			"imports": "https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+			"ignoreIntegrity":true
+		
 		},
 		{
 			"kind": "styling",
 			"tag": "com-iprosis-sample-gauge-aps",
 			"url": "https://AnnaiProsis.github.io/gaugeNew/aps_webcomponent.js",
-			"integrity": "",
-			"ignoreIntegrity":true
-		},
-		{
-			"kind": "extra",
-			"tag": "com-iprosis-sample-gauge-extra",
-			"url": "https://AnnaiProsis.github.io/gaugeNew/echarts.all.js",
 			"integrity": "",
 			"ignoreIntegrity":true
 		}
