@@ -1,4 +1,5 @@
-import 'https://cdnjs.cloudflare.com/ajax/libs/echarts/4.6.0/echarts-en.common.js';
+console.log(1);
+import ' https://sapui5.hana.ondemand.com/resources/sap-ui-core.js ';
 (function()  {
 let tmpl = document.createElement('template');
 tmpl.innerHTML = `
@@ -14,8 +15,8 @@ class Gauge extends HTMLElement {
 		//var echarts = require('echarts');
 		this._shadowRoot = this.attachShadow({mode: 'open'});
 		this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
-
-		loadScript
+		console.log(2);
+		import ' https://sapui5.hana.ondemand.com/resources/sap-ui-core.js ';
 
 		var dataResultSet = null;
 		var min = null; 		
