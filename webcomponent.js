@@ -4,12 +4,12 @@ tmpl.innerHTML = `
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.6.0/echarts-en.common.js"></script>
 	<div id="main" style="width:600px; height:400px;"></div>
 `;
-
+import 'https://cdnjs.cloudflare.com/ajax/libs/echarts/4.6.0/echarts-en.common.js';
 class Gauge extends HTMLElement {
 
 	constructor() {
 		super();
-		import 'https://cdnjs.cloudflare.com/ajax/libs/echarts/4.6.0/echarts-en.common.js';
+		
 		//var echarts = require('echarts');
 		this._shadowRoot = this.attachShadow({mode: 'open'});
 		this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
