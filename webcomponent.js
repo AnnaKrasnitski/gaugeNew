@@ -9,9 +9,13 @@ class Gauge extends HTMLElement {
 
 	constructor() {
 		super();
+		import 'https://cdnjs.cloudflare.com/ajax/libs/echarts/4.6.0/echarts-en.common.js';
 		//var echarts = require('echarts');
 		this._shadowRoot = this.attachShadow({mode: 'open'});
 		this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
+
+		loadScript
+
 		var dataResultSet = null;
 		var min = null; 		
 		var max = null; 		
