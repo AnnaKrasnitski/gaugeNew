@@ -16,7 +16,7 @@ class Gauge extends HTMLElement {
 		this._shadowRoot = this.attachShadow({mode: 'open'});
 		this._shadowRoot.appendChild(tmpl.content.cloneNode(true));
 		console.log(2);
-		import ' https://sapui5.hana.ondemand.com/resources/sap-ui-core.js ';
+		
 
 		var dataResultSet = null;
 		var min = null; 		

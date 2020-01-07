@@ -14,7 +14,8 @@
 			"tag": "com-iprosis-sample-gauge",
 			"url": "https://AnnaiProsis.github.io/gaugeNew/webcomponent.js",
 			"integrity": "",
-			"ignoreIntegrity":true
+			"ignoreIntegrity":true,
+			"imports": "https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
 		},
 		{
 			"kind": "styling",
